@@ -1,0 +1,21 @@
+# | by sawervatoryy | Discord: sawervatoryy |
+
+prefix: "&8[&#D8A1FFpnSouls&8] "
+activated: "%prefix%&fВы призвали &#D8A1FF%soul%&f."
+already-active: "%prefix%&fУ вас уже активна &#D8A1FFдуша&f. Управление доступно в &#D8A1FF/souls."
+deactivated: "%prefix%&fАктивная &#D8A1FFдуша &fотозвана."
+not-owned: "%prefix%&#C80505Эта &#D8A1FFдуша &#C80505вам не принадлежит."
+already-owned: "%prefix%&fУ игрока уже есть эта &#D8A1FFдуша."
+player-not-owned: "%prefix%&fУ игрока нет этой &#D8A1FFдуши."
+unknown-soul: "%prefix%&fДуша &#D8A1FF%id% &fне найдена."
+player-not-found: "%prefix%&#FF0000Игрок не найден."
+no-permission: "%prefix%&#FF0000Недостаточно прав."
+given: "%prefix%&fДуша '%soul%' &fдобавлена игроку &#D8A1FF%player%&f."
+received: "%prefix%&fВы получили %soul%. &fОткрыть коллекцию: &#D8A1FF/souls"
+removed: "%prefix%&fДуша %soul% удалена у игрока &#D8A1FF%player%&f."
+reloaded: "%prefix%&#0EFF00Конфигурация перезагружена. Активные &#4AFA4Fдуши &#0EFF00обновлены."
+usage:
+  - "&#D8A1FF/pnsouls list &8— &fсписок душ"
+  - "&#D8A1FF/pnsouls give <игрок> <душа>"
+  - "&#D8A1FF/pnsouls take <игрок> <душа>"
+  - "&#D8A1FF/pnsouls reload"

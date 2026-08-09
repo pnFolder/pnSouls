@@ -1,0 +1,23 @@
+name: pnSouls
+version: '${version}'
+main: ru.privatenull.pnsouls.PnSoulsPlugin
+api-version: '1.16'
+authors: [privatenull]
+website: https://github.com/Dy6HiLa/pnSouls
+description: Активируемые души-спутники с уникальными эффектами
+softdepend: [ProtocolLib]
+commands:
+  pnsouls:
+    description: Главная команда pnSouls
+    usage: /pnsouls
+    aliases: [pnsoul, souls]
+permissions:
+  pnsouls.use:
+    description: Активация и деактивация душ
+    default: true
+  pnsouls.admin:
+    description: Выдача душ и перезагрузка pnSouls
+    default: op
+  pnsouls.update:
+    description: Уведомления о новых версиях pnSouls
+    default: op

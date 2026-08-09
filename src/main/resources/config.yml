@@ -1,0 +1,50 @@
+visual:
+  update-period-ticks: 1
+  right-offset: 1.20
+  # Смещение за спину уменьшает попадание души в поле зрения и прицел.
+  back-offset: 0.75
+  # Дополнительная поправка к базовой высоте над игроком (+0.90).
+  # При значении 0.35 видимая голова души находится примерно на Y +2.2.
+  height-offset: 0.35
+  bob-amplitude: 0.10
+  bob-period-ticks: 40
+  follow-strength: 0.32
+  velocity-damping: 0.68
+  # Вертикальное движение специально медленнее, чтобы душа плавно сопровождала прыжки.
+  vertical-follow-strength: 0.10
+  vertical-velocity-damping: 0.78
+  max-vertical-speed: 0.18
+  # Плавность обхода вокруг игрока при резком вращении камеры.
+  rotation-follow-strength: 0.12
+  max-rotation-speed-degrees: 8.0
+  # В переднем секторе камера временно не показывает душу только её владельцу.
+  owner-screen-protection: true
+  owner-hide-angle-degrees: 70.0
+  owner-show-angle-degrees: 82.0
+  owner-hide-distance: 3.5
+  # Быстрый поворот камеры не скрывает душу: сектор должен удерживаться несколько тиков.
+  owner-hide-delay-ticks: 12
+  owner-show-delay-ticks: 4
+  prediction-ticks: 1.5
+  snap-distance: 8.0
+  small: true
+
+farmer:
+  vertical-scan-radius: 2
+  # Вероятности применяются отдельно к каждому растению при каждом новом шаге.
+  crop-chances:
+    POTATOES: 0.50
+    WHEAT: 0.50
+    BEETROOTS: 0.50
+    CARROTS: 0.50
+    SWEET_BERRY_BUSH: 0.50
+    MELON_STEM: 0.50
+    PUMPKIN_STEM: 0.50
+    CACTUS: 0.50
+    SUGAR_CANE: 0.50
+    CACTUS_FLOWER: 0.50
+    KELP: 0.50
+    BAMBOO: 0.50
+    CAVE_VINES: 0.50
+    CAVE_VINES_PLANT: 0.50
+    NETHER_WART: 0.10

@@ -1,0 +1,71 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.1.10'
+    id 'com.gradleup.shadow' version '8.3.9'
+}
+
+group = 'ru.privatenull'
+version = '1.0.0'
+
+base {
+    archivesName = 'pnSouls'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc-repo'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+}
+
+dependencies {
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
+    compileOnly 'com.mojang:authlib:1.5.25'
+    compileOnly 'net.dmulloy2:ProtocolLib:5.4.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.10'
+    implementation 'org.bstats:bstats-bukkit:3.2.1'
+    implementation('ru.privatenull:pnLibrary:1.0.0') {
+        transitive = false
+    }
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testImplementation 'org.yaml:snakeyaml:1.28'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+tasks.shadowJar {
+    archiveClassifier.set('')
+    archiveFileName.set("pnSouls-${project.version}.jar")
+    mergeServiceFiles()
+    relocate 'ru.privatenull.pnlibrary', 'ru.privatenull.pnsouls.libs.pnlibrary'
+    relocate 'org.bstats', 'ru.privatenull.pnsouls.libs.bstats'
+    relocate 'kotlin', 'ru.privatenull.pnsouls.libs.kotlin'
+}
+
+tasks.jar {
+    archiveClassifier.set('plain')
+}
+
+tasks.build {
+    dependsOn tasks.shadowJar
+}
+
+tasks.processResources {
+    filteringCharset = 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand(version: project.version)
+    }
+}

@@ -1,0 +1,323 @@
+# =============================================================================
+#                              НАСТРОЙКА ДУШ
+# =============================================================================
+# Ключ под souls — технический ID. aliases — русские названия для команд и tab-complete.
+# Выдавать можно по ID или алиасу: /souls give <игрок> <id/алиас>.
+# Чтобы создать свою душу, скопируйте любой раздел целиком и замените его ID.
+# Души полностью виртуальны и физически не появляются в руках или инвентаре игрока.
+# model.head, model.chest и model.hand видны ТОЛЬКО на невидимом ArmorStand.
+# Выдача: /pnsouls give <игрок> <id>. Выбор души выполняется кликом в /souls.
+#
+# МОДЕЛЬ НЕВИДИМОГО ARMORSTAND
+# model.head  — предмет на голове визуального ArmorStand.
+# model.chest — видимая броня; model.hand — видимый предмет в правой руке.
+# hand-pose: "x,y,z" — поворот правой руки в градусах.
+# custom-model-data необязателен и используется ресурс-паком.
+# Для кожаной брони доступен color: "R,G,B".
+#
+# СВОЯ BASE64-ГОЛОВА
+# Вместо material у model.head можно написать:
+# head:
+#   base64: "полный Base64, textures.minecraft.net URL или хеш текстуры"
+#   custom-model-data: 3101
+# Если одновременно заданы base64 и material, приоритет всегда у base64.
+#
+# ЭФФЕКТЫ И СПОСОБНОСТИ
+# potion-effects: {GLOWING: 1, NIGHT_VISION: 1}
+# Уровень 1 = I, 2 = II. Используются Bukkit-названия эффектов.
+# abilities.mob-drops: {multiplier: 2.0, chance: 0.25} — множитель и шанс дропа.
+# abilities.mob-experience-multiplier: 3.0 — множитель опыта с мобов.
+# abilities.infinite-food: true — вечная сытость.
+# abilities.crop-growth: {enabled: true, radius: 4} — рост культур при каждом шаге.
+# Вероятности отдельных культур находятся в config.yml.
+#
+# СЛЕД ЗА ДУШОЙ
+# trail.enabled: true/false — включить или отключить след.
+# particle — Bukkit-тип частицы. DUST/REDSTONE поддерживает настраиваемый RGB-цвет.
+# color: "R,G,B"; size — размер цветной частицы; count — количество за импульс.
+# spread — разброс; height-offset — высота следа от ног ArmorStand;
+# back-offset — отступ назад по фактическому направлению движения души;
+# interval-ticks — интервал появления частиц в тиках.
+#
+# ПРИМЕР НОВОЙ ДУШИ
+# souls:
+#   miner:
+#     name: "&#55FFFFДуша Шахтёра"
+#     model:
+#       head: {base64: "...", custom-model-data: 3110}
+#       chest: {material: IRON_CHESTPLATE, custom-model-data: 3210}
+#       hand: {material: DIAMOND_PICKAXE, custom-model-data: 3310}
+#       hand-pose: "-20,0,-15"
+#     lore: ["&7Описание", "", "&bПКМ, чтобы активировать"]
+#     potion-effects: {FAST_DIGGING: 2, GLOWING: 1}
+# =============================================================================
+
+souls:
+  doubler:
+    aliases: ["дублёр", "дублер"]
+    name: "&fДуша &#FF6972Дублёра"
+    model:
+      head:
+        base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGYwN2MzMzFjODNhMDRjYTVlZWUyYWM3ODkyNzc0ZjIwOGQxYTI0NTE5OTU1MjdlNzIyZTg1YTk2MDY4YjBmYiJ9fX0="
+        glow: true
+      chest: {material: LEATHER_CHESTPLATE, color: "175,45,55", custom-model-data: 3201}
+      hand: {material: BOW, custom-model-data: 3301}
+      hand-pose: "-15,0,-18"
+    trail:
+      enabled: true
+      particle: DUST
+      color: "255,75,90"
+      size: 1.0
+      count: 2
+      spread: 0.04
+      height-offset: 0.10
+      back-offset: 0.30
+      interval-ticks: 2
+    lore:
+      - ""
+      - "&#FF6972Информация:"
+      - "&f Охотничий дух, увеличивающий добычу"
+      - "&f с поверженных существ в &cx2 &fраза &8(шанс: 25%)"
+      - ""
+      - "&#FF6972Дополнительно:"
+      - "&f Вы получаете &cвечную &fсытость"
+      - ""
+      - "&#FF6972⚠ Важно:"
+      - "&f После перезахода душа возвращается к вам,"
+      - "&f после смерти появляется вновь."
+      - ""
+      - "&#FF6972Эффекты:"
+      - "&8 ◆ &fНочное зрение I"
+      - "&8 ◆ &fСвечение I"
+    potion-effects:
+      NIGHT_VISION: 1
+      GLOWING: 1
+    abilities:
+      mob-drops:
+        multiplier: 2.0
+        chance: 0.25
+      infinite-food: true
+
+  experienced:
+    aliases: ["опытный"]
+    name: "&fДуша &#FFE14AОпытного"
+    model:
+      head:
+        base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODdkODg1YjMyYjBkZDJkNmI3ZjFiNTgyYTM0MTg2ZjhhNTM3M2M0NjU4OWEyNzM0MjMxMzJiNDQ4YjgwMzQ2MiJ9fX0="
+        glow: true
+      chest: {material: LEATHER_CHESTPLATE, color: "225,190,40", custom-model-data: 3202}
+      hand: {material: ENCHANTED_BOOK, custom-model-data: 3302}
+      hand-pose: "-20,0,-12"
+    trail:
+      enabled: true
+      particle: DUST
+      color: "255,220,60"
+      size: 1.0
+      count: 2
+      spread: 0.04
+      height-offset: 0.10
+      back-offset: 0.30
+      interval-ticks: 2
+    lore:
+      - ""
+      - "&#FFE14AИнформация:"
+      - "&f Опытная душа, увеличивающая опыт"
+      - "&f с побеждённых существ в &ex3 &fраза больше!"
+      - ""
+      - "&#FFE14A⚠ Важно:"
+      - "&f После перезахода душа возвращается к вам,"
+      - "&f после смерти появляется вновь."
+      - ""
+      - "&#FFE14AЭффекты:"
+      - "&8 ◆ &fСвечение I"
+      - "&8 ◆ &fСлепота I"
+    potion-effects:
+      GLOWING: 1
+      BLINDNESS: 1
+    abilities:
+      mob-experience-multiplier: 3.0
+
+  harvester:
+    aliases: ["урожайник"]
+    name: "&fДуша &#66E06FУрожайника"
+    model:
+      head:
+        base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjhjOTg2Nzk5YmFmZTcxODRhOGFlMjMzZGI2ZDlhYjhlOWI4NDRmYTlkNGRhNjhmYTNkYzk0YWM4ZmU4MjAifX19"
+        glow: true
+      chest: {material: LEATHER_CHESTPLATE, color: "78,180,83", custom-model-data: 3203}
+      hand: {material: IRON_HOE, custom-model-data: 3303}
+      hand-pose: "-18,0,-12"
+    trail:
+      enabled: true
+      particle: DUST
+      color: "90,230,110"
+      size: 1.0
+      count: 2
+      spread: 0.04
+      height-offset: 0.10
+      back-offset: 0.30
+      interval-ticks: 2
+    lore:
+      - ""
+      - "&#66E06FИнформация:"
+      - "&f Дух плодородия, ускоряющий рост растений"
+      - "&f с каждым шагом на &a1 &fединицу в радиусе &a4 &fблоков."
+      - ""
+      - "&8 ◇ &fКартофель &a(50%)"
+      - "&8 ◇ &fПшеница &a(50%)"
+      - "&8 ◇ &fСвёкла &a(50%)"
+      - "&8 ◇ &fМорковь &a(50%)"
+      - "&8 ◇ &fСладкая ягода &a(50%)"
+      - "&8 ◇ &fАрбуз &a(50%)"
+      - "&8 ◇ &fТыква &a(50%)"
+      - "&8 ◇ &fКактус &a(50%)"
+      - "&8 ◇ &fЦветок кактуса &a(50%)"
+      - "&8 ◇ &fЛаминария &a(50%)"
+      - "&8 ◇ &fБамбук &a(50%)"
+      - "&8 ◇ &fСветящиеся ягоды &a(50%)"
+      - "&8 ◇ &fАдский нарост &a(10%)"
+      - ""
+      - "&#66E06F⚠ Важно:"
+      - "&f После перезахода душа возвращается к вам,"
+      - "&f после смерти появляется вновь."
+      - ""
+      - "&#66E06FЭффекты:"
+      - "&8 ◆ &fСвечение I"
+    potion-effects:
+      GLOWING: 1
+    abilities:
+      crop-growth:
+        enabled: true
+        radius: 4
+
+  miner:
+    aliases: ["шахтёр", "шахтер"]
+    name: "&fДуша &#F4A64AШахтёра"
+    model:
+      head:
+        base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjFiNDY1OTdlMDM5M2E5ZDc2NDYzYTE0Nzk3NTNjZjE2ZDJlMWIzMDM1MGI4MzFjMzE4MjljMmUxNWI2MTNjZiJ9fX0="
+        glow: true
+      chest: {material: IRON_CHESTPLATE}
+      hand: {material: DIAMOND_PICKAXE}
+      hand-pose: "-20,0,-15"
+    trail: {enabled: true, particle: DUST, color: "244,166,74", size: 1.0, count: 2, spread: 0.04, height-offset: 0.10, back-offset: 0.30, interval-ticks: 2}
+    lore:
+      - ""
+      - "&#F4A64AИнформация:"
+      - "&f Ускоряет добычу блоков и позволяет"
+      - "&f видеть в темноте глубоких шахт."
+      - ""
+      - "&#F4A64AЭффекты:"
+      - "&8 ◆ &fСпешка II"
+      - "&8 ◆ &fНочное зрение I"
+    potion-effects: {FAST_DIGGING: 2, NIGHT_VISION: 1}
+
+  wanderer:
+    aliases: ["странник"]
+    name: "&fДуша &#B06CFFСтранника"
+    model:
+      head:
+        base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzNhOGU0MDJkYWQxYjdkYWQ5YWFlNmY0MDE1OTMyMTgzNDI5Y2U4N2JiYmVjZWQzMTE5MDI2ZjgyOTYzMzZjMiJ9fX0="
+        glow: true
+      chest: {material: LEATHER_CHESTPLATE, color: "125,70,185"}
+      hand: {material: COMPASS}
+      hand-pose: "-16,0,-10"
+    trail: {enabled: true, particle: DUST, color: "176,108,255", size: 1.0, count: 2, spread: 0.04, height-offset: 0.10, back-offset: 0.30, interval-ticks: 2}
+    lore:
+      - ""
+      - "&#B06CFFИнформация:"
+      - "&f Облегчает дальние путешествия"
+      - "&f и помогает преодолевать препятствия."
+      - ""
+      - "&#B06CFFЭффекты:"
+      - "&8 ◆ &fСкорость II"
+      - "&8 ◆ &fПрыгучесть I"
+    potion-effects: {SPEED: 2, JUMP: 1}
+
+  guardian:
+    aliases: ["хранитель"]
+    name: "&fДуша &#5FA8FFХранителя"
+    model:
+      head:
+        base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWZlNDljMWZhOWYyMTk5YzQ0MTMxMTFhODRmMTkzZTBjOGUxNzlmMzY3ZmU0Mjc0NGYxZWM4YjhlZjY3Yzc0NSJ9fX0="
+        glow: true
+      chest: {material: DIAMOND_CHESTPLATE}
+      hand: {material: SHIELD}
+      hand-pose: "-10,0,-20"
+    trail: {enabled: true, particle: DUST, color: "95,168,255", size: 1.0, count: 2, spread: 0.04, height-offset: 0.10, back-offset: 0.30, interval-ticks: 2}
+    lore:
+      - ""
+      - "&#5FA8FFИнформация:"
+      - "&f Защитный дух, повышающий стойкость"
+      - "&f владельца в опасных ситуациях."
+      - ""
+      - "&#5FA8FFЭффекты:"
+      - "&8 ◆ &fСопротивление I"
+      - "&8 ◆ &fРегенерация I"
+    potion-effects: {DAMAGE_RESISTANCE: 1, REGENERATION: 1}
+
+  phoenix:
+    aliases: ["феникс"]
+    name: "&fДуша &#FF7138Феникса"
+    model:
+      head:
+        base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2Q4NjA3MjFkMzZiYjliNzllZWY3ZTM5MGQzYzQ4MTRhZTU1MDhhODkyOTE5ODI1OWJkMTgyYmY3NjE4MGI1In19fQ=="
+        glow: true
+      chest: {material: GOLDEN_CHESTPLATE}
+      hand: {material: BLAZE_ROD}
+      hand-pose: "-18,0,-14"
+    trail: {enabled: true, particle: FLAME, color: "255,113,56", size: 1.0, count: 2, spread: 0.04, height-offset: 0.10, back-offset: 0.30, interval-ticks: 2}
+    lore:
+      - ""
+      - "&#FF7138Информация:"
+      - "&f Огненный дух защищает от пламени"
+      - "&f и постепенно восстанавливает здоровье."
+      - ""
+      - "&#FF7138Эффекты:"
+      - "&8 ◆ &fОгнестойкость I"
+      - "&8 ◆ &fРегенерация I"
+    potion-effects: {FIRE_RESISTANCE: 1, REGENERATION: 1}
+
+  ocean:
+    aliases: ["океан"]
+    name: "&fДуша &#42D9E8Океана"
+    model:
+      head:
+        base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTY3OTliZmFhM2EyYzYzYWQ4NWRkMzc4ZTY2ZDU3ZDlhOTdhM2Y4NmQwZDlmNjgzYzQ5ODYzMmY0ZjVjIn19fQ=="
+        glow: true
+      chest: {material: DIAMOND_CHESTPLATE}
+      hand: {material: TRIDENT}
+      hand-pose: "-22,0,-12"
+    trail: {enabled: true, particle: DUST, color: "66,217,232", size: 1.0, count: 2, spread: 0.04, height-offset: 0.10, back-offset: 0.30, interval-ticks: 2}
+    lore:
+      - ""
+      - "&#42D9E8Информация:"
+      - "&f Позволяет свободно дышать"
+      - "&f и быстро двигаться под водой."
+      - ""
+      - "&#42D9E8Эффекты:"
+      - "&8 ◆ &fПодводное дыхание I"
+      - "&8 ◆ &fГрация дельфина I"
+    potion-effects: {WATER_BREATHING: 1, DOLPHINS_GRACE: 1}
+
+  alchemist:
+    aliases: ["алхимик"]
+    name: "&fДуша &#E66CFFАлхимика"
+    model:
+      head:
+        base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTU0ZjhjOTY0NDUxZWI3YmVhMzYwN2JhZDc3MTE2NDdlY2EzYmEwZTNiYjFjYTEwYmQzNjM5NzRiYTlhNGUwMCJ9fX0="
+        glow: true
+      chest: {material: LEATHER_CHESTPLATE, color: "150,55,175"}
+      hand: {material: POTION}
+      hand-pose: "-16,0,-16"
+    trail: {enabled: true, particle: DUST, color: "230,108,255", size: 1.0, count: 2, spread: 0.04, height-offset: 0.10, back-offset: 0.30, interval-ticks: 2}
+    lore:
+      - ""
+      - "&#E66CFFИнформация:"
+      - "&f Таинственный дух улучшает удачу"
+      - "&f и поддерживает жизненные силы."
+      - ""
+      - "&#E66CFFЭффекты:"
+      - "&8 ◆ &fУдача I"
+      - "&8 ◆ &fРегенерация I"
+    potion-effects: {LUCK: 1, REGENERATION: 1}

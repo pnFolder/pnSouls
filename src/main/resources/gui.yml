@@ -1,0 +1,77 @@
+# =============================================================================
+#                             GUI ВЫБОРА ДУШИ
+# =============================================================================
+# /souls и /pnsouls list открывают это меню обычному игроку.
+# ЛКМ по доступной душе призывает её. ЛКМ по активной душе отзывает её.
+# Души в GUI — только кнопки предпросмотра, физические предметы игроку не выдаются.
+# После изменения выполните /pnsouls reload.
+#
+# title — заголовок; size — 9/18/27/36/45/54; content-slots — слоты душ.
+# decor — заполнитель. Кнопки поддерживают material или base64, name и lore.
+# Плейсхолдеры: {page}, {pages}, {amount}, {owned}, {active}.
+# =============================================================================
+list:
+  title: "&0Коллекция душ"
+  size: 54
+  content-slots: [20, 22, 24, 29, 31, 33]
+
+  decor:
+    material: BLACK_STAINED_GLASS_PANE
+    name: " "
+
+  entry-lore-owned:
+    - ""
+    - "&#65D1FC«Действие»"
+    - " &7- &#B2C3A2ЛКМ — призвать душу"
+    - ""
+  entry-lore-active:
+    - ""
+    - "&#65FF08✓ Сейчас активна"
+    - " &7- &#B2C3A2ЛКМ — отозвать душу"
+    - ""
+  entry-lore-locked:
+    - ""
+    - "&#FC7165✕ Душа не получена"
+    - ""
+
+  page-info:
+    slot: 4
+    base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTY0MzlkMmUzMDZiMjI1NTE2YWE5YTZkMDA3YTdlNzVlZGQyZDUwMTVkMTEzYjQyZjQ0YmU2MmE1MTdlNTc0ZiJ9fX0="
+    name: "&#FC7165Коллекция душ"
+    lore:
+      - ""
+      - "&#65FF08«Информация»"
+      - " &7- &#B2C3A2Страница: &#A4A4A4{page} &7/ &#FC7165{pages}"
+      - " &7- &#B2C3A2Получено: &#A4A4A4{owned} &7/ &#A4A4A4{amount}"
+      - " &7- &#B2C3A2Активная: &#A4A4A4{active}"
+      - ""
+
+  previous-page:
+    slot: 45
+    base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjllYTFkODYyNDdmNGFmMzUxZWQxODY2YmNhNmEzMDQwYTA2YzY4MTc3Yzc4ZTQyMzE2YTEwOThlNjBmYjdkMyJ9fX0="
+    name: "&#FC7165Предыдущая страница"
+    lore: []
+
+  next-page:
+    slot: 53
+    base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODI3MWE0NzEwNDQ5NWUzNTdjM2U4ZTgwZjUxMWE5ZjEwMmIwNzAwY2E5Yjg4ZTg4Yjc5NWQzM2ZmMjAxMDVlYiJ9fX0="
+    name: "&#FC7165Следующая страница"
+    lore: []
+
+  previous-page-disabled:
+    slot: 45
+    base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjc1NDgzNjJhMjRjMGZhODQ1M2U0ZDkzZTY4YzU5NjlkZGJkZTU3YmY2NjY2YzAzMTljMWVkMWU4NGQ4OTA2NSJ9fX0="
+    name: "&8Предыдущая страница"
+    lore: []
+
+  next-page-disabled:
+    slot: 53
+    base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjc1NDgzNjJhMjRjMGZhODQ1M2U0ZDkzZTY4YzU5NjlkZGJkZTU3YmY2NjY2YzAzMTljMWVkMWU4NGQ4OTA2NSJ9fX0="
+    name: "&8Следующая страница"
+    lore: []
+
+  close:
+    slot: 49
+    base64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjllYTFkODYyNDdmNGFmMzUxZWQxODY2YmNhNmEzMDQwYTA2YzY4MTc3Yzc4ZTQyMzE2YTEwOThlNjBmYjdkMyJ9fX0="
+    name: "&#FF2310Закрыть меню"
+    lore: []
