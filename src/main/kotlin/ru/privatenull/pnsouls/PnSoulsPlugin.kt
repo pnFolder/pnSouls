@@ -134,7 +134,7 @@ class PnSoulsPlugin : JavaPlugin() {
     )
 
     companion object {
-        private const val GITHUB_REPOSITORY = "Dy6HiLa/pnSouls"
+        private const val GITHUB_REPOSITORY = "pnFolder/pnSouls"
         private const val UPDATE_PERMISSION = "pnsouls.update"
         private const val UPDATE_CHECK_PERIOD_HOURS = 6L
         private const val SUPPORT_URL = "https://discord.gg/rRbzq6cnc6"

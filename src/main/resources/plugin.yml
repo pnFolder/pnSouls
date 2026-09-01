@@ -3,7 +3,7 @@ version: '${version}'
 main: ru.privatenull.pnsouls.PnSoulsPlugin
 api-version: '1.16'
 authors: [privatenull]
-website: https://github.com/Dy6HiLa/pnSouls
+website: https://github.com/pnFolder/pnSouls
 description: Активируемые души-спутники с уникальными эффектами
 softdepend: [ProtocolLib]
 commands:

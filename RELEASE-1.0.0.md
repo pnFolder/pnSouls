@@ -94,7 +94,7 @@
 
 ## Обновления
 
-pnSouls использует общий `UpdateChecker` из pnLibrary. Проверка выполняется асинхронно по последнему релизу репозитория `Dy6HiLa/pnSouls` и никогда не скачивает или не заменяет JAR автоматически.
+pnSouls использует общий `UpdateChecker` из pnLibrary. Проверка выполняется асинхронно по последнему релизу репозитория `pnFolder/pnSouls` и никогда не скачивает или не заменяет JAR автоматически.
 
 При выходе новой версии:
 
@@ -142,13 +142,13 @@ pnSouls использует общий `UpdateChecker` из pnLibrary. Пров
 
 <table>
   <tr>
-    <td align="center"><img src="https://raw.githubusercontent.com/Dy6HiLa/pnSouls/main/docs/images/soul-wanderer.png" width="300"><br><b>Душа Странника</b></td>
-    <td align="center"><img src="https://raw.githubusercontent.com/Dy6HiLa/pnSouls/main/docs/images/soul-harvester.png" width="300"><br><b>Душа Урожайника</b></td>
-    <td align="center"><img src="https://raw.githubusercontent.com/Dy6HiLa/pnSouls/main/docs/images/soul-phoenix.png" width="300"><br><b>Душа Феникса</b></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/pnFolder/pnSouls/main/docs/images/soul-wanderer.png" width="300"><br><b>Душа Странника</b></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/pnFolder/pnSouls/main/docs/images/soul-harvester.png" width="300"><br><b>Душа Урожайника</b></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/pnFolder/pnSouls/main/docs/images/soul-phoenix.png" width="300"><br><b>Душа Феникса</b></td>
   </tr>
 </table>
 
 ## Ссылки
 
-- GitHub: https://github.com/Dy6HiLa/pnSouls
+- GitHub: https://github.com/pnFolder/pnSouls
 - Поддержка: https://discord.gg/rRbzq6cnc6
