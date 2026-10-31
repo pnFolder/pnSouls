@@ -37,7 +37,7 @@ class PnLibraryRuntime private constructor(
                             .support(PnLibraryIdentity.SUPPORT_URL)
                             .build(),
                     )
-                    .metrics { metrics -> metrics.bStats(BSTATS_PROJECT_ID) }
+                    .metrics { metrics -> metrics.bStats(BSTATS_PROJECT_ID).fastStats(FASTSTATS_TOKEN) }
                     .diagnostics(
                         owner.dataFolder.toPath(),
                         DiagnosticContainer.builder("pnsouls")
@@ -91,6 +91,7 @@ class PnLibraryRuntime private constructor(
         const val MINIMUM_VERSION = "0.0.1-dev.6"
         private const val MODULE_ID = "pnsouls"
         private const val BSTATS_PROJECT_ID = 33269
+        private const val FASTSTATS_TOKEN = "2a3f012394da142017577b5873c882ba"
         private const val POLICY_SOURCE =
             "https://raw.githubusercontent.com/pnFolder/pnlibrary-policy/main/.pnlibrary/policies/PnSoulsPolicy.java"
         private const val UPDATE_OWNER = "pnFolder"
