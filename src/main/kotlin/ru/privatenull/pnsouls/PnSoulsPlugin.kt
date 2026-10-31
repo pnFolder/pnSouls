@@ -1,18 +1,17 @@
 package ru.privatenull.pnsouls
 
-import org.bstats.bukkit.Metrics
 import org.bukkit.command.PluginCommand
 import org.bukkit.plugin.java.JavaPlugin
-import ru.privatenull.pnlibrary.gui.GuiOpenAnimationService
-import ru.privatenull.pnlibrary.gui.GuiUpdateService
-import ru.privatenull.pnlibrary.gui.protocollib.ProtocolLibSlotPacketSender
-import ru.privatenull.pnlibrary.lifecycle.PluginBanner
-import ru.privatenull.pnlibrary.update.UpdateChecker
-import ru.privatenull.pnlibrary.update.UpdateSettings
+import org.pnfolder.pnlibrary.bukkit.bootstrap.PnLibraryBootstrap
+import ru.privatenull.pnsouls.support.gui.GuiOpenAnimationService
+import ru.privatenull.pnsouls.support.gui.GuiUpdateService
+import ru.privatenull.pnsouls.support.gui.protocollib.ProtocolLibSlotPacketSender
+import ru.privatenull.pnsouls.bootstrap.PnLibraryLifecycleListener
 import ru.privatenull.pnsouls.command.SoulCommand
 import ru.privatenull.pnsouls.config.Messages
 import ru.privatenull.pnsouls.config.SoulRegistry
 import ru.privatenull.pnsouls.gui.SoulListMenu
+import ru.privatenull.pnsouls.integration.PnLibraryRuntime
 import ru.privatenull.pnsouls.item.SoulItemFactory
 import ru.privatenull.pnsouls.runtime.CropGrowthService
 import ru.privatenull.pnsouls.runtime.SoulListener
@@ -31,10 +30,33 @@ class PnSoulsPlugin : JavaPlugin() {
     private lateinit var guiUpdates: GuiUpdateService
     private lateinit var guiAnimations: GuiOpenAnimationService
     private lateinit var menu: SoulListMenu
-    private lateinit var updateChecker: UpdateChecker
+    private var pnRuntime: PnLibraryRuntime? = null
+    private var pnLibraryReady = false
     private var guiPacketSender: AutoCloseable? = null
 
+    override fun onLoad() {
+        try {
+            pnLibraryReady = PnLibraryBootstrap.ensureInstalled(this, PnLibraryRuntime.MINIMUM_VERSION)
+        } catch (failure: Throwable) {
+            logger.log(java.util.logging.Level.SEVERE,
+                "Не удалось автоматически подготовить pnLibrary. pnSouls не будет запущен.", failure)
+        }
+    }
+
     override fun onEnable() {
+        if (!pnLibraryReady) {
+            logger.severe("pnLibrary не подготовлена: проверьте доступ к GitHub и ошибку загрузки выше.")
+            server.pluginManager.disablePlugin(this)
+            return
+        }
+        try {
+            pnRuntime = PnLibraryRuntime.connect(this)
+        } catch (failure: Throwable) {
+            logger.log(java.util.logging.Level.SEVERE, "pnLibrary не удалось включить или подключить к pnSouls.", failure)
+            server.pluginManager.disablePlugin(this)
+            return
+        }
+        server.pluginManager.registerEvents(PnLibraryLifecycleListener(this), this)
         saveDefaultConfig()
         messages = Messages(this)
         registry = SoulRegistry(this).also(SoulRegistry::load)
@@ -61,9 +83,9 @@ class PnSoulsPlugin : JavaPlugin() {
         guiUpdates = GuiUpdateService(packetSender)
         guiAnimations = GuiOpenAnimationService(this, guiUpdates)
         menu = SoulListMenu(this, registry, items, messages, ownership, sessions, guiAnimations, guiUpdates)
-        updateChecker = UpdateChecker(this, updateSettings()).also(UpdateChecker::start)
+        pnRuntime?.register { registry.all().size }
 
-        val listener = SoulListener(sessions, crops, updateChecker)
+        val listener = SoulListener(sessions, crops)
         server.pluginManager.registerEvents(listener, this)
         server.pluginManager.registerEvents(menu, this)
         val executor = SoulCommand(this, registry, messages, sessions, ownership, menu)
@@ -74,8 +96,7 @@ class PnSoulsPlugin : JavaPlugin() {
         refreshCommandDispatcher()
 
         server.onlinePlayers.forEach(sessions::resume)
-        Metrics(this, 33269)
-        PluginBanner.enabled(this, SUPPORT_URL)
+        pnRuntime?.enabled(registry.all().size)
     }
 
     override fun onDisable() {
@@ -87,9 +108,14 @@ class PnSoulsPlugin : JavaPlugin() {
             logger.warning("Не удалось остановить ProtocolLib SET_SLOT: ${exception.message}")
         }
         guiPacketSender = null
-        if (::updateChecker.isInitialized) updateChecker.cancel()
         if (::sessions.isInitialized) sessions.shutdown()
-        PluginBanner.disabled(this, SUPPORT_URL)
+        val closing = pnRuntime
+        pnRuntime = null
+        try {
+            closing?.close()
+        } catch (failure: RuntimeException) {
+            logger.log(java.util.logging.Level.WARNING, "Не удалось корректно закрыть контекст pnLibrary", failure)
+        }
     }
 
     fun reloadPluginData() {
@@ -97,7 +123,6 @@ class PnSoulsPlugin : JavaPlugin() {
         messages.load()
         registry.load()
         crops.load(config)
-        if (::updateChecker.isInitialized) updateChecker.restart(updateSettings())
         menu.closeAll()
         menu.load()
         sessions.reloadOnlinePlayers()
@@ -125,18 +150,4 @@ class PnSoulsPlugin : JavaPlugin() {
         }, 1L)
     }
 
-    private fun updateSettings() = UpdateSettings(
-        true,
-        GITHUB_REPOSITORY,
-        UPDATE_PERMISSION,
-        UPDATE_CHECK_PERIOD_HOURS,
-        SUPPORT_URL,
-    )
-
-    companion object {
-        private const val GITHUB_REPOSITORY = "pnFolder/pnSouls"
-        private const val UPDATE_PERMISSION = "pnsouls.update"
-        private const val UPDATE_CHECK_PERIOD_HOURS = 6L
-        private const val SUPPORT_URL = "https://discord.gg/rRbzq6cnc6"
-    }
 }
