@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
-import ru.privatenull.pnlibrary.text.ColorUtil
+import ru.privatenull.pnsouls.support.text.ColorUtil
 import ru.privatenull.pnsouls.PnSoulsPlugin
 import ru.privatenull.pnsouls.config.Messages
 import ru.privatenull.pnsouls.config.SoulRegistry

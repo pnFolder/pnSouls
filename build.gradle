@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'ru.privatenull'
-version = '1.0.0'
+version = '1.0.1'
 
 base {
     archivesName = 'pnSouls'
@@ -18,15 +18,16 @@ repositories {
     }
 }
 
+def pnLibraryVersion = '0.0.1-dev.6'
+
 dependencies {
     compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
     compileOnly 'com.mojang:authlib:1.5.25'
     compileOnly 'net.dmulloy2:ProtocolLib:5.4.0'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.10'
-    implementation 'org.bstats:bstats-bukkit:3.2.1'
-    implementation('ru.privatenull:pnLibrary:1.0.0') {
-        transitive = false
-    }
+    // Общий рантайм ставит bootstrap, зашитый в jar; для компиляции нужен только публичный API.
+    implementation "io.github.pnfolder:pnlibrary-bootstrap-bukkit:${pnLibraryVersion}"
+    compileOnly "io.github.pnfolder:pnlibrary-api:${pnLibraryVersion}"
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
     testImplementation 'org.yaml:snakeyaml:1.28'
 }
@@ -42,6 +43,10 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     }
 }
 
+configurations.configureEach {
+    attributes.attribute(org.gradle.api.attributes.java.TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 21)
+}
+
 tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
@@ -50,8 +55,9 @@ tasks.shadowJar {
     archiveClassifier.set('')
     archiveFileName.set("pnSouls-${project.version}.jar")
     mergeServiceFiles()
-    relocate 'ru.privatenull.pnlibrary', 'ru.privatenull.pnsouls.libs.pnlibrary'
-    relocate 'org.bstats', 'ru.privatenull.pnsouls.libs.bstats'
+    relocate 'org.pnfolder.pnlibrary.bootstrap', 'ru.privatenull.pnsouls.libs.pnbootstrap'
+    relocate 'org.pnfolder.pnlibrary.bukkit.bootstrap', 'ru.privatenull.pnsouls.libs.pnbootstrap.bukkit'
+    relocate 'org.pnfolder.pnlibrary.console', 'ru.privatenull.pnsouls.libs.pnbootstrap.console'
     relocate 'kotlin', 'ru.privatenull.pnsouls.libs.kotlin'
 }
 

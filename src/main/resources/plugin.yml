@@ -5,7 +5,7 @@ api-version: '1.16'
 authors: [privatenull]
 website: https://github.com/pnFolder/pnSouls
 description: Активируемые души-спутники с уникальными эффектами
-softdepend: [ProtocolLib]
+softdepend: [pnLibrary, ProtocolLib]
 commands:
   pnsouls:
     description: Главная команда pnSouls
@@ -17,7 +17,4 @@ permissions:
     default: true
   pnsouls.admin:
     description: Выдача душ и перезагрузка pnSouls
-    default: op
-  pnsouls.update:
-    description: Уведомления о новых версиях pnSouls
     default: op

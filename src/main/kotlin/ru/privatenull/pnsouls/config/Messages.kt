@@ -3,7 +3,7 @@ package ru.privatenull.pnsouls.config
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
-import ru.privatenull.pnlibrary.text.ColorUtil
+import ru.privatenull.pnsouls.support.text.ColorUtil
 import java.io.File
 
 class Messages(private val plugin: JavaPlugin) {

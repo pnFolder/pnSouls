@@ -14,9 +14,9 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
-import ru.privatenull.pnlibrary.gui.GuiOpenAnimationService
-import ru.privatenull.pnlibrary.gui.GuiUpdateService
-import ru.privatenull.pnlibrary.text.ColorUtil
+import ru.privatenull.pnsouls.support.gui.GuiOpenAnimationService
+import ru.privatenull.pnsouls.support.gui.GuiUpdateService
+import ru.privatenull.pnsouls.support.text.ColorUtil
 import ru.privatenull.pnsouls.config.Messages
 import ru.privatenull.pnsouls.config.SoulRegistry
 import ru.privatenull.pnsouls.item.SkullFactory

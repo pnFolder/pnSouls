@@ -15,14 +15,12 @@ import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.inventory.ItemStack
-import ru.privatenull.pnlibrary.update.UpdateChecker
 import ru.privatenull.pnsouls.visual.VisualManager
 import java.util.concurrent.ThreadLocalRandom
 
 class SoulListener(
     private val sessions: SoulSessionService,
     private val crops: CropGrowthService,
-    private val updateChecker: UpdateChecker,
 ) : Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -42,7 +40,6 @@ class SoulListener(
     @EventHandler(priority = EventPriority.MONITOR)
     fun onJoin(event: PlayerJoinEvent) {
         sessions.resume(event.player)
-        updateChecker.notifyAdminOnJoin(event.player)
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
