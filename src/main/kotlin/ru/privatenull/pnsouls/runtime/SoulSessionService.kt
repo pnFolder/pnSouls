@@ -1,5 +1,7 @@
 package ru.privatenull.pnsouls.runtime
 
+import ru.privatenull.pnsouls.integration.Log
+
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
@@ -53,7 +55,7 @@ class SoulSessionService(
         val definition = registry[storedId]
         if (definition == null) {
             player.persistentDataContainer.remove(activeKey)
-            plugin.logger.warning("Не удалось восстановить неизвестную душу '$storedId' игроку ${player.name}")
+            Log.warning("Не удалось восстановить неизвестную душу '$storedId' игроку ${player.name}")
             return
         }
         sessions[player.uniqueId] = definition

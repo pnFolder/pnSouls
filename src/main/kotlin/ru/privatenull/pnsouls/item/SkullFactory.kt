@@ -1,5 +1,7 @@
 package ru.privatenull.pnsouls.item
 
+import ru.privatenull.pnsouls.integration.Log
+
 import com.mojang.authlib.GameProfile
 import com.mojang.authlib.properties.Property
 import org.bukkit.Bukkit
@@ -27,7 +29,7 @@ object SkullFactory {
             head.itemMeta = meta
         } catch (exception: Throwable) {
             if (reported.add(texture)) {
-                Bukkit.getLogger().warning("pnSouls: не удалось применить Base64-текстуру: ${exception.message}")
+                Log.warning("pnSouls: не удалось применить Base64-текстуру", exception)
             }
         }
         return head

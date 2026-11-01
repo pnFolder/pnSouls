@@ -1,5 +1,7 @@
 package ru.privatenull.pnsouls.support.gui;
 
+import ru.privatenull.pnsouls.integration.Log;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -51,7 +53,7 @@ public final class GuiUpdateService implements AutoCloseable {
             try {
                 return new GuiUpdateService(new ProtocolLibSlotPacketSender(plugin));
             } catch (RuntimeException | LinkageError exception) {
-                plugin.getLogger().warning("ProtocolLib GUI transport is unavailable; using Bukkit: "
+                Log.warning("ProtocolLib GUI transport is unavailable; using Bukkit: "
                         + exception.getMessage());
             }
         }

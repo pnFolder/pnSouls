@@ -22,6 +22,7 @@ class PnLibraryRuntime private constructor(
     private var module: ModuleContext? = null
 
     fun register(souls: () -> Int) {
+        Log.fallback(owner.logger)
         check(registration == null) { "pnSouls уже зарегистрирован в pnLibrary" }
         val registered = runtime.plugins.register(owner)
         registration = registered
@@ -56,6 +57,7 @@ class PnLibraryRuntime private constructor(
                             .artifact("(?i)^pnSouls-[0-9].*\\.jar$", 17)
                     }
             }
+            module?.let { Log.attach(it.logger) }
         } catch (failure: RuntimeException) {
             closeRegistration()
             throw failure
@@ -71,6 +73,7 @@ class PnLibraryRuntime private constructor(
     override fun close() {
         val closing = module
         module = null
+        Log.detach()
         if (closing != null && !closing.isClosed) {
             try {
                 closing.lifecycle.disabled().show()

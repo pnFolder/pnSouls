@@ -1,5 +1,7 @@
 package ru.privatenull.pnsouls
 
+import ru.privatenull.pnsouls.integration.Log
+
 import org.bukkit.command.PluginCommand
 import org.bukkit.plugin.java.JavaPlugin
 import org.pnfolder.pnlibrary.bukkit.bootstrap.PnLibraryBootstrap
@@ -35,24 +37,24 @@ class PnSoulsPlugin : JavaPlugin() {
     private var guiPacketSender: AutoCloseable? = null
 
     override fun onLoad() {
+        Log.fallback(logger)
         try {
             pnLibraryReady = PnLibraryBootstrap.ensureInstalled(this, PnLibraryRuntime.MINIMUM_VERSION)
         } catch (failure: Throwable) {
-            logger.log(java.util.logging.Level.SEVERE,
-                "Не удалось автоматически подготовить pnLibrary. pnSouls не будет запущен.", failure)
+            Log.error("Не удалось автоматически подготовить pnLibrary. pnSouls не будет запущен.", failure)
         }
     }
 
     override fun onEnable() {
         if (!pnLibraryReady) {
-            logger.severe("pnLibrary не подготовлена: проверьте доступ к GitHub и ошибку загрузки выше.")
+            Log.error("pnLibrary не подготовлена: проверьте доступ к GitHub и ошибку загрузки выше.")
             server.pluginManager.disablePlugin(this)
             return
         }
         try {
             pnRuntime = PnLibraryRuntime.connect(this)
         } catch (failure: Throwable) {
-            logger.log(java.util.logging.Level.SEVERE, "pnLibrary не удалось включить или подключить к pnSouls.", failure)
+            Log.error("pnLibrary не удалось включить или подключить к pnSouls.", failure)
             server.pluginManager.disablePlugin(this)
             return
         }
@@ -73,10 +75,10 @@ class PnSoulsPlugin : JavaPlugin() {
                 try {
                     ProtocolLibSlotPacketSender(this).also { guiPacketSender = it }
                 } catch (exception: RuntimeException) {
-                    logger.warning("Не удалось включить ProtocolLib SET_SLOT: ${exception.message}")
+                    Log.warning("Не удалось включить ProtocolLib SET_SLOT", exception)
                     null
                 } catch (error: LinkageError) {
-                    logger.warning("ProtocolLib несовместим с SET_SLOT: ${error.message}")
+                    Log.warning("ProtocolLib несовместим с SET_SLOT", error)
                     null
                 }
             } else null
@@ -105,7 +107,7 @@ class PnSoulsPlugin : JavaPlugin() {
         try {
             guiPacketSender?.close()
         } catch (exception: Exception) {
-            logger.warning("Не удалось остановить ProtocolLib SET_SLOT: ${exception.message}")
+            Log.warning("Не удалось остановить ProtocolLib SET_SLOT", exception)
         }
         guiPacketSender = null
         if (::sessions.isInitialized) sessions.shutdown()
@@ -114,7 +116,7 @@ class PnSoulsPlugin : JavaPlugin() {
         try {
             closing?.close()
         } catch (failure: RuntimeException) {
-            logger.log(java.util.logging.Level.WARNING, "Не удалось корректно закрыть контекст pnLibrary", failure)
+            Log.warning("Не удалось корректно закрыть контекст pnLibrary", failure)
         }
     }
 

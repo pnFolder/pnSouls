@@ -1,5 +1,7 @@
 package ru.privatenull.pnsouls.config
 
+import ru.privatenull.pnsouls.integration.Log
+
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
@@ -50,7 +52,7 @@ class SoulRegistry(private val plugin: JavaPlugin) {
                 val normalized = key.lowercase(Locale.ROOT)
                 val previous = resolved.putIfAbsent(normalized, definition)
                 if (previous != null && previous.id != definition.id) {
-                    plugin.logger.warning("Алиас души '$key' уже занят душой ${previous.id}")
+                    Log.warning("Алиас души '$key' уже занят душой ${previous.id}")
                 }
             }
         }
@@ -74,7 +76,7 @@ class SoulRegistry(private val plugin: JavaPlugin) {
                 @Suppress("DEPRECATION")
                 val type = PotionEffectType.getByName(name.uppercase(Locale.ROOT))
                 if (type == null) {
-                    plugin.logger.warning("Неизвестный эффект $name у души $id — пропущен")
+                    Log.warning("Неизвестный эффект $name у души $id — пропущен")
                 } else {
                     effects[type] = effectSection.getInt(name).coerceAtLeast(1)
                 }
