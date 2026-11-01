@@ -9,7 +9,8 @@ import org.bukkit.persistence.PersistentDataType
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import org.bukkit.scheduler.BukkitTask
+import org.pnfolder.pnlibrary.api.tasks.TaskHandle
+import ru.privatenull.pnsouls.integration.PluginTasks
 import ru.privatenull.pnsouls.config.Messages
 import ru.privatenull.pnsouls.config.SoulRegistry
 import ru.privatenull.pnsouls.model.SoulDefinition
@@ -25,13 +26,13 @@ class SoulSessionService(
     private val activeKey = NamespacedKey(plugin, "active_soul")
     private val sessions = hashMapOf<UUID, SoulDefinition>()
     private val appliedEffects = hashMapOf<UUID, Set<PotionEffectType>>()
-    private var effectTask: BukkitTask? = null
+    private var effectTask: TaskHandle? = null
 
     fun start() {
         effectTask?.cancel()
-        effectTask = Bukkit.getScheduler().runTaskTimer(plugin, Runnable {
+        effectTask = PluginTasks.timer(1L, 20L, Runnable {
             Bukkit.getOnlinePlayers().forEach(::refreshEffects)
-        }, 1L, 20L)
+        })
     }
 
     fun activate(player: Player, definition: SoulDefinition, replace: Boolean = false): Boolean {
@@ -82,7 +83,7 @@ class SoulSessionService(
     }
 
     fun resumeNextTick(player: Player) {
-        Bukkit.getScheduler().runTask(plugin, Runnable { if (player.isOnline) resume(player) })
+        PluginTasks.run(Runnable { if (player.isOnline) resume(player) })
     }
 
     fun definition(player: Player): SoulDefinition? = sessions[player.uniqueId]

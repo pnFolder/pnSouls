@@ -4,7 +4,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitTask;
+import org.pnfolder.pnlibrary.api.tasks.TaskHandle;
+import ru.privatenull.pnsouls.integration.PluginTasks;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -91,7 +92,7 @@ public final class GuiOpenAnimationService {
 
         tasks.put(playerId, animation);
         try {
-            animation.task = plugin.getServer().getScheduler().runTaskTimer(plugin, () -> {
+            animation.task = PluginTasks.timer(1L, 1L, () -> {
                 if (tasks.get(playerId) != animation) {
                     cancelTask(animation);
                     return;
@@ -115,7 +116,7 @@ public final class GuiOpenAnimationService {
                     updates.syncTop(player, inventory);
                     finish(playerId, animation);
                 }
-            }, 1L, 1L);
+            });
         } catch (RuntimeException exception) {
             tasks.remove(playerId, animation);
             restoreRemaining(animation);
@@ -263,7 +264,7 @@ public final class GuiOpenAnimationService {
         private final int visibleTitleLength;
         private int cursor;
         private int titleCursor;
-        private BukkitTask task;
+        private TaskHandle task;
 
         private OpeningAnimation(Inventory inventory, List<SlotItem> items, String title, boolean animateTitle) {
             this.inventory = inventory;

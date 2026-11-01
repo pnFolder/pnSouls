@@ -57,7 +57,10 @@ class PnLibraryRuntime private constructor(
                             .artifact("(?i)^pnSouls-[0-9].*\\.jar$", 17)
                     }
             }
-            module?.let { Log.attach(it.logger) }
+            module?.let {
+                Log.attach(it.logger)
+                PluginTasks.bind(it.tasks)
+            }
         } catch (failure: RuntimeException) {
             closeRegistration()
             throw failure
@@ -73,6 +76,7 @@ class PnLibraryRuntime private constructor(
     override fun close() {
         val closing = module
         module = null
+        PluginTasks.bind(null)
         Log.detach()
         if (closing != null && !closing.isClosed) {
             try {

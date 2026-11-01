@@ -14,6 +14,7 @@ import ru.privatenull.pnsouls.config.Messages
 import ru.privatenull.pnsouls.config.SoulRegistry
 import ru.privatenull.pnsouls.gui.SoulListMenu
 import ru.privatenull.pnsouls.integration.PnLibraryRuntime
+import ru.privatenull.pnsouls.integration.PluginTasks
 import ru.privatenull.pnsouls.item.SoulItemFactory
 import ru.privatenull.pnsouls.runtime.CropGrowthService
 import ru.privatenull.pnsouls.runtime.SoulListener
@@ -60,6 +61,7 @@ class PnSoulsPlugin : JavaPlugin() {
         }
         server.pluginManager.registerEvents(PnLibraryLifecycleListener(this), this)
         saveDefaultConfig()
+        pnRuntime?.register { if (::registry.isInitialized) registry.all().size else 0 }
         messages = Messages(this)
         registry = SoulRegistry(this).also(SoulRegistry::load)
         items = SoulItemFactory(this)
@@ -85,7 +87,6 @@ class PnSoulsPlugin : JavaPlugin() {
         guiUpdates = GuiUpdateService(packetSender)
         guiAnimations = GuiOpenAnimationService(this, guiUpdates)
         menu = SoulListMenu(this, registry, items, messages, ownership, sessions, guiAnimations, guiUpdates)
-        pnRuntime?.register { registry.all().size }
 
         val listener = SoulListener(sessions, crops)
         server.pluginManager.registerEvents(listener, this)
@@ -136,7 +137,7 @@ class PnSoulsPlugin : JavaPlugin() {
      * and every online player's command tree are refreshed.
      */
     private fun refreshCommandDispatcher() {
-        server.scheduler.runTaskLater(this, Runnable {
+        PluginTasks.later(1L, Runnable {
             try {
                 server.javaClass.getMethod("syncCommands").invoke(server)
             } catch (exception: ReflectiveOperationException) {
@@ -149,7 +150,7 @@ class PnSoulsPlugin : JavaPlugin() {
                     logger.fine("Не удалось обновить команды игрока ${player.name}: ${exception.message}")
                 }
             }
-        }, 1L)
+        })
     }
 
 }

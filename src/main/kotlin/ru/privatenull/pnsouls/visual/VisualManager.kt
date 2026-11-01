@@ -4,7 +4,8 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.scheduler.BukkitTask
+import org.pnfolder.pnlibrary.api.tasks.TaskHandle
+import ru.privatenull.pnsouls.integration.PluginTasks
 import ru.privatenull.pnsouls.item.SoulItemFactory
 import ru.privatenull.pnsouls.model.SoulDefinition
 import java.util.UUID
@@ -14,17 +15,17 @@ class VisualManager(
     private val items: SoulItemFactory,
 ) {
     private val visuals = hashMapOf<UUID, SoulVisual>()
-    private var task: BukkitTask? = null
+    private var task: TaskHandle? = null
     private var tick = 0L
     private lateinit var settings: VisualSettings
 
     fun start() {
         stopTask()
         settings = VisualSettings.from(plugin.config)
-        task = Bukkit.getScheduler().runTaskTimer(plugin, Runnable {
+        task = PluginTasks.timer(1L, settings.updatePeriod, Runnable {
             tick += settings.updatePeriod
             visuals.values.toList().forEach { it.tick(tick) }
-        }, 1L, settings.updatePeriod)
+        })
     }
 
     fun show(player: Player, definition: SoulDefinition) {
