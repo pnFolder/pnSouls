@@ -151,4 +151,4 @@ pnSouls использует общий `UpdateChecker` из pnLibrary. Пров
 ## Ссылки
 
 - GitHub: https://github.com/pnFolder/pnSouls
-- Поддержка: https://discord.gg/jfjxY6Q57
+- Поддержка: https://discord.gg/rSxZAVW7uC
