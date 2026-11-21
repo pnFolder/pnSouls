@@ -1,9 +1,9 @@
 package ru.privatenull.pnsouls.integration
 
-import org.pnfolder.pnlibrary.api.tasks.TaskExecution
+import org.pnfolder.pnlibrary.api.tasks.spec.TaskExecution
 import org.pnfolder.pnlibrary.api.tasks.TaskHandle
 import org.pnfolder.pnlibrary.api.tasks.TaskScope
-import org.pnfolder.pnlibrary.api.tasks.TaskSpec
+import org.pnfolder.pnlibrary.api.tasks.spec.TaskSpec
 
 /**
  * Единственное место, где pnSouls запускает задачи: планировщик pnLibrary (`ModuleContext.tasks`).
