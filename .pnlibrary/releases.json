@@ -3,6 +3,29 @@
   "product": "pnsouls",
   "releases": [
     {
+      "version": "1.1.0",
+      "channel": "stable",
+      "description": "Переход на pnLibrary 0.1.0-dev.6 (API 2): нужна новая библиотека.",
+      "changelogUrl": "https://github.com/PnFolder/pnSouls/blob/main/.pnlibrary/changelogs/1.1.0.md",
+      "publishedAt": "2026-11-21T15:48:47Z",
+      "api": {
+        "minimum": 2,
+        "maximum": 2
+      },
+      "artifacts": [
+        {
+          "file": "pnSouls-1.1.0.jar",
+          "platform": "BUKKIT",
+          "java": {
+            "minimum": 17
+          },
+          "url": "https://github.com/PnFolder/pnSouls/releases/download/v1.1.0/pnSouls-1.1.0.jar",
+          "sha256": "5790320ed35288edd0043851f1992ab265f5a99614358fe966394cfc96d48b85",
+          "size": 2347575
+        }
+      ]
+    },
+    {
       "version": "1.0.1",
       "channel": "stable",
       "description": "Подключение к pnLibrary 0.0.1-dev.6: обновления, диагностика, метрики и единый журнал.",
