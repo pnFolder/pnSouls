@@ -95,7 +95,7 @@ class PnLibraryRuntime private constructor(
     }
 
     companion object {
-        const val MINIMUM_VERSION = "0.0.1-dev.6"
+        const val MINIMUM_VERSION = "0.1.0-dev.6"
         private const val MODULE_ID = "pnsouls"
         private const val BSTATS_PROJECT_ID = 33269
         private const val FASTSTATS_TOKEN = "2a3f012394da142017577b5873c882ba"
