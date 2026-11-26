@@ -5,12 +5,10 @@ import org.pnfolder.pnlibrary.api.diagnostics.DiagnosticConfiguration
 import org.pnfolder.pnlibrary.api.diagnostics.report.DiagnosticContainer
 import org.pnfolder.pnlibrary.api.plugin.ModuleContext
 import org.pnfolder.pnlibrary.api.plugin.PluginRegistration
-import org.pnfolder.pnlibrary.api.remote.PolicyErrorAction
+import org.pnfolder.pnlibrary.api.remote.result.PolicyErrorAction
 import org.pnfolder.pnlibrary.api.remote.RemotePolicySettings
 import org.pnfolder.pnlibrary.api.runtime.PnLibrary
-import org.pnfolder.pnlibrary.api.runtime.PnLibraryIdentity
 import org.pnfolder.pnlibrary.api.runtime.PnLibraryProvider
-import org.pnfolder.pnlibrary.api.updates.product.UpdateChannel
 import java.util.logging.Level
 
 /** Подключение pnSouls к общему рантайму pnLibrary: политика, метрики, диагностика и обновления. */
@@ -35,7 +33,6 @@ class PnLibraryRuntime private constructor(
                         RemotePolicySettings.builder()
                             .source(POLICY_SOURCE)
                             .onError(PolicyErrorAction.KEEP_RUNNING)
-                            .support(PnLibraryIdentity.SUPPORT_URL)
                             .build(),
                     )
                     .metrics { metrics -> metrics.bStats(BSTATS_PROJECT_ID).fastStats(FASTSTATS_TOKEN) }
@@ -52,8 +49,6 @@ class PnLibraryRuntime private constructor(
                     )
                     .updates(UPDATE_OWNER, UPDATE_REPOSITORY) { updater ->
                         updater
-                            .channel(UpdateChannel.STABLE)
-                            .automaticDownload(false)
                             .artifact("(?i)^pnSouls-[0-9].*\\.jar$", 17)
                     }
             }
@@ -95,7 +90,7 @@ class PnLibraryRuntime private constructor(
     }
 
     companion object {
-        const val MINIMUM_VERSION = "0.1.0-dev.6"
+        const val MINIMUM_VERSION = "0.1.0-dev.7"
         private const val MODULE_ID = "pnsouls"
         private const val BSTATS_PROJECT_ID = 33269
         private const val FASTSTATS_TOKEN = "2a3f012394da142017577b5873c882ba"

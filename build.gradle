@@ -19,7 +19,7 @@ repositories {
     }
 }
 
-def pnLibraryVersion = '0.1.0-dev.6'
+def pnLibraryVersion = '0.1.0-dev.7'
 
 dependencies {
     compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
